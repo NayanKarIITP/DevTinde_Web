@@ -1,5 +1,8 @@
 import React from 'react'
-import Navbar from './Navbar'
+import Body from './Body'
+import Login from './login'
+import Profile from './profile'
+import Connections from './connections'
 import { BrowserRouter,Routes,Route } from 'react-router'
 
 function App() {
@@ -7,13 +10,13 @@ function App() {
     <>
     <BrowserRouter basename='/'>
       <Routes>
-        <Route path='/about' element={<div>About page</div>}/>
-        <Route path='/profile' element={<div>Profile page</div>}/>
-        <Route path='/login' element={<div>Login page</div>}/>
-        <Route path='/register' element={<div>Register page</div>}/>
+        <Route path='/' element={<Body/>}>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/connections' element={<Connections/>}/>
+        </Route>
       </Routes>
     </BrowserRouter>
-    <Navbar/>
     </>
   )
 }
