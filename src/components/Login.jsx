@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 const Login = () => {
   const [emailId, setEmailId] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,10 +18,11 @@ const Login = () => {
         BASE_URL + '/login', {
         emailId,
         password
-      },{withCredentials: true});
+      }, { withCredentials: true });
       dispatch(addUser(res.data));
       return navigate('/');
     } catch (error) {
+      setError(error?.response?.data || "Something went wrong");
       console.error(error);
     }
   };
@@ -36,6 +38,7 @@ const Login = () => {
               <div className="label">
                 <span className="label-text">Email ID</span>
               </div>
+              <p className='text-red-600'>{error}</p>
               <input
                 type="text"
                 value={emailId}
@@ -48,6 +51,7 @@ const Login = () => {
               <div className="label">
                 <span className="label-text mt-3">Password</span>
               </div>
+              <p className='text-red-600'>{error}</p>
               <input
                 type="password"
                 value={password}
