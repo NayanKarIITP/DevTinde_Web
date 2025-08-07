@@ -23,10 +23,10 @@ const Navbar = () => {
     <div>
       <div className="navbar bg-base-200 shadow-sm">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl ">
+          <div className="btn btn-ghost text-xl ">
             <img src="./src/images/FinalDT.png" alt="DevTinder Logo" className="w-13 h-14" />
             <span><Link to='/'>DevTinder</Link></span>
-          </a>
+          </div>
         </div>
 
         {user && (
@@ -49,7 +49,7 @@ const Navbar = () => {
                     <span className="badge">New</span>
                   </Link>
                 </li>
-                <li><Link>Settings</Link></li>
+                <li><Link to='/connections'>Connections</Link></li>
                 <li><Link onClick={handlelogout}>Logout</Link></li>
               </ul>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import Body from './components/Body'
-import Login from './components/login'
+import Login from './components/Login'
 import Profile from './components/Profile'
 import Connections from './components/Connections'
 import Feed from './components/Feed'
