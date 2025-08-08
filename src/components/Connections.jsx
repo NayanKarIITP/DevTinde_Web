@@ -28,7 +28,7 @@ const Connections = () => {
 
   return (
     <div className='text-center my-10'>
-      <h1 className='text-bold text-amber-50 text-3xl'>Connections</h1>
+      <h1 className='text-bold text-white text-3xl'>Connections</h1>
 
       {connection.map((connection) => {
         const { firstName, lastName, photoURL, age,gender, about } = connection;
