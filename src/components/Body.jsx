@@ -23,7 +23,7 @@ const Body = () => {
       if(error.status===401){
         navigate('/login');
       }
-      else return navigate('/SomethingWentWrong');
+      else return navigate('/login');
     }
   };
 

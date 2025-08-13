@@ -3,13 +3,10 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { BASE_URL } from '../utils/constants'
 import { addRequests } from '../utils/requestSlice'
-import { useState } from 'react'
 
 const Requests = () => {
     const dispatch = useDispatch();
     const request = useSelector((store) => store.request);
-
-    const[showButton,setShowButton] = useState(true);
 
     const reviewRequest = async (status, _id) => {
         try {

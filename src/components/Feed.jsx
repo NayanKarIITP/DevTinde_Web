@@ -16,13 +16,17 @@ const Feed = () => {
       dispatch(addFeed(res.data));
     } catch (error) {
       //TODO: Handle error
-      console.error(error);
+      //console.error(error);
     }
   };
 
   useEffect(() => {
     getFeed();
   }, []);
+
+  if(!feed) return;
+
+  if(feed.length <=0) return <h1 className='text-center text-white text-2xl mt-7'>There are no users</h1>;
   return (
     feed?.length > 0  &&(
     <div className='flex justify-center my-10'>
