@@ -16,7 +16,7 @@ const Navbar = () => {
       return Navigate('/login');
     } catch (error) {
       //Enter logic maybe redirect to error page
-      return Navigate('/Somethingwentwrong');
+      console.log(error)
     }
   }
   return (
