@@ -5,7 +5,7 @@ import Profile from './components/Profile'
 import Connections from './components/Connections'
 import Feed from './components/Feed'
 import Requests from './components/Requests'
-import SomethingWentWrong from './components/SomethingWentWrong'
+import Somethingwentwrong from './components/Somethingwentwrong'
 import { BrowserRouter, Routes, Route } from 'react-router'
 import { Provider } from "react-redux"
 import appStore from './utils/appStore'
@@ -22,7 +22,7 @@ function App() {
               <Route path='/profile' element={<Profile />} />
               <Route path='/connections' element={<Connections />} />
               <Route path='/requests' element={<Requests />} />
-              <Route path='/SomethingWentWrong' element={<SomethingWentWrong />} />
+              <Route path='/Somethingwentwrong' element={<Somethingwentwrong />} />
             </Route>
           </Routes>
         </BrowserRouter>
