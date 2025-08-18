@@ -67,7 +67,6 @@ const Requests = () => {
                             </div>
                         </div>
 
-
                     );
                 })}
             </div>

@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux'
-import React, { use } from 'react'
 import { BASE_URL } from '../utils/constants'
 import axios from 'axios'
 import { useEffect } from 'react'

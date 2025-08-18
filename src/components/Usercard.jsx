@@ -2,13 +2,11 @@ import React, { use } from 'react'
 import { BASE_URL } from '../utils/constants';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
 import { removeUserFromFeed } from '../utils/feedSlice';
 
 const Usercard = ({ user }) => {
     const { _id, firstName, lastName, photoURL, age, gender, about } = user;
     const dispatch = useDispatch();
-    const [isOwnProfile, setIsOwnProfile] = useState(true)
 
     const handleSendRequest = async (status, userId) => {
         try {
