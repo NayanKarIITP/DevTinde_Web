@@ -3,6 +3,7 @@ import { BASE_URL } from '../utils/constants'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { addConnections } from '../utils/connectionSlice'
+import { Link } from 'react-router-dom'
 
 const Connections = () => {
   const connection = useSelector((store) => store.connection);
@@ -30,17 +31,19 @@ const Connections = () => {
       <h1 className='text-bold text-white text-3xl'>Connections</h1>
 
       {connection.map((connection) => {
-        const { firstName, lastName, photoURL, age,gender, about } = connection;
+        const { _id,firstName, lastName, photoURL, age,gender, about } = connection;
 
         // And then explicitly return the JSX
         return (
-          <div className='flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto'>
+          <div key={_id} className='flex justify-between m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto'>
             <div><img className='w-20 h-20 rounded-full' src={photoURL} alt="Photo" /></div>
             <div className='text-left mx-4'>
               <h2 className='font-bold text-xl'>{firstName + " " + lastName}</h2>
               {age && gender && <p>{age + ", " + gender}</p>}
               <p>{about}</p></div>
+              <Link to={"/chat/"+_id}><button className='btn btn-primary'>Chat</button></Link>
           </div>
+          
         );
       })}
     </div>
