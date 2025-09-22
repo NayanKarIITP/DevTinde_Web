@@ -24,8 +24,8 @@ const Navbar = () => {
       <div className="navbar bg-base-200 shadow-sm">
         <div className="flex-1">
           <div className="btn btn-ghost text-xl ">
-            <img src="./src/images/FinalDT.png" alt="DevTinder Logo" className="w-13 h-14" />
-            <span><Link to='/'>DevTinder</Link></span>
+            {/* <img src="./src/images/FinalDT.png" alt="DevTinder Logo" className="w-13 h-14" /> */}
+            <span><Link to='/'>🖥️ TechTribe</Link></span>
           </div>
         </div>
 

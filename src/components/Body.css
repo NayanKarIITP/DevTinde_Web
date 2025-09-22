@@ -1,0 +1,21 @@
+/* Body.css */
+
+.body-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the container takes up at least the full viewport height */
+  
+  /* --- Updated Styles --- */
+  background-color: #1a1a1a; /* A modern, dark gray that complements other components */
+  color: #e5e7eb; /* A light gray for default text to ensure readability on the dark background */
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.content-wrap {
+  flex: 1; /* This makes the main content area grow to fill available space and pushes the footer down */
+  width: 100%;
+  max-width: 1280px; /* Sets a max width for content on larger screens */
+  margin: 0 auto; /* Centers the content area horizontally */
+  padding: 2rem 1.5rem; /* Adds comfortable spacing around your content */
+}
