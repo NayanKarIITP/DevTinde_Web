@@ -160,17 +160,36 @@ const Login = () => {
         setError('');
         setIsLoading(true);
 
+        // 🔥 Frontend weak password check for signup
+        if (!isLoginForm && formData.password.length < 8) {
+            setError("Password is too weak. Use at least 8 characters.");
+            setIsLoading(false);
+            return;
+        }
+
         const endpoint = isLoginForm ? '/login' : '/sign';
-        const payload = isLoginForm 
+        const payload = isLoginForm
             ? { emailId: formData.emailId, password: formData.password }
             : formData;
-        
+
         try {
-            const res = await axios.post(BASE_URL + endpoint, payload, { withCredentials: true });
+            const res = await axios.post(BASE_URL + endpoint, payload, {
+                withCredentials: true
+            });
+
             dispatch(addUser(isLoginForm ? res.data : res.data.data));
             navigate(isLoginForm ? '/' : '/profile');
+
         } catch (err) {
-            setError(err.response?.data?.message || "Something went wrong. Please try again.");
+            // 🔥 Improved error handling → shows backend message exactly
+            const errorMessage =
+                err.response?.data?.message ||
+                err.response?.data?.error ||
+                err.response?.data?.errors?.password ||
+                err.response?.data?.errors?.emailId ||
+                "Unexpected error occurred.";
+
+            setError(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -194,7 +213,7 @@ const Login = () => {
                     <h2 className="card-title justify-center text-3xl font-bold text-white">
                         {isLoginForm ? "Welcome Back" : "Create Account"}
                     </h2>
-                    
+
                     <form onSubmit={handleSubmit} className="space-y-4 mt-4">
                         <AnimatePresence mode="wait">
                             {!isLoginForm && (
@@ -222,6 +241,7 @@ const Login = () => {
                             <div className="label"><span className="label-text text-white/70">Email</span></div>
                             <input type="email" name="emailId" value={formData.emailId} onChange={handleChange} className="input input-bordered w-full bg-white/10" required />
                         </label>
+
                         <label className="form-control">
                             <div className="label"><span className="label-text text-white/70">Password</span></div>
                             <input type="password" name="password" value={formData.password} onChange={handleChange} className="input input-bordered w-full bg-white/10" required />
@@ -253,4 +273,3 @@ const Login = () => {
 };
 
 export default Login;
-
