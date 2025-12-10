@@ -167,7 +167,7 @@ const Login = () => {
             return;
         }
 
-        const endpoint = isLoginForm ? '/login' : '/sign';
+        const endpoint = isLoginForm ? 'login' : 'sign';
         const payload = isLoginForm
             ? { emailId: formData.emailId, password: formData.password }
             : formData;
