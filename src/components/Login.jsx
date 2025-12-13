@@ -277,9 +277,6 @@
 
 
 
-
-
-
 import axios from 'axios';
 import { useState } from 'react';
 import { addUser } from '../utils/userSlice';
@@ -318,7 +315,7 @@ const Login = () => {
       return;
     }
 
-    // 🔥 Correct backend routes
+
     const endpoint = isLoginForm ? "/login" : "/sign";
 
     const payload = isLoginForm
