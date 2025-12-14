@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import Usercard from "./Usercard";
-import api from "../utils/api"; // ✅ ONLY ONE api import
+import api from "../utils/api";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
@@ -12,7 +12,7 @@ const Feed = () => {
     if (feed) return;
 
     try {
-      const res = await api.get("/feed"); // ✅ NO BASE_URL
+      const res = await api.get("/feed");
       dispatch(addFeed(res.data));
     } catch (error) {
       console.error(error);
