@@ -193,7 +193,7 @@ const EditProfile = ({ user }) => {
         setIsSaving(true);
 
         try {
-            const res = await api.patch(`${BASE_URL}/profile/edit`, formData, { withCredentials: true });
+            const res = await api.patch(`/profile/edit`, formData, { withCredentials: true });
             dispatch(addUser(res?.data?.data));
             setShowToast(true);
             setTimeout(() => setShowToast(false), 2500);

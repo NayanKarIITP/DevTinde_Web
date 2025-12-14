@@ -104,7 +104,7 @@ const Requests = () => {
 
     const fetchRequests = async () => {
         try {
-            const res = await api.get(BASE_URL + '/user/requests/recieved', { withCredentials: true });
+            const res = await api.get('/user/requests/recieved', { withCredentials: true });
             dispatch(addRequests(res.data.data));
         } catch (error) {
             console.error("Failed to fetch requests:", error);
@@ -120,7 +120,7 @@ const Requests = () => {
         setRequests(currentRequests => currentRequests.filter(req => req._id !== requestId));
         
         try {
-            await api.post(`${BASE_URL}/request/review/${status}/${requestId}`, {}, { withCredentials: true });
+            await api.post(`/request/review/${status}/${requestId}`, {}, { withCredentials: true });
             // On success, the state is already updated. You could add a success toast here.
         } catch (error) {
             console.error(`Failed to ${status} request:`, error);

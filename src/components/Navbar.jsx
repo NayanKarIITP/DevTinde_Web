@@ -11,7 +11,7 @@ const Navbar = () => {
   
   const handlelogout =async()=>{
     try {
-      await api.post(BASE_URL+'/logout',{},{withCredentials:true});
+      await api.post('/logout',{},{withCredentials:true});
       dispatch(removeUser());
       return Navigate('/login');
     } catch (error) {

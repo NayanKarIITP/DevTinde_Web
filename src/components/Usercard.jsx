@@ -66,7 +66,7 @@ const Usercard = ({ user }) => {
         try {
             // Optimistically update the UI by dispatching the removal action first
             dispatch(removeUserFromFeed(userId));
-            await api.post(`${BASE_URL}/request/send/${status}/${userId}`, {}, { withCredentials: true });
+            await api.post(`/request/send/${status}/${userId}`, {}, { withCredentials: true });
         } catch (error) {
             console.error("Failed to send request:", error);
             // Here you could add logic to revert the UI change if the request fails

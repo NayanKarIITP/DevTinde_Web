@@ -66,7 +66,7 @@ const Body = () => {
     if (userData) return;
 
     try {
-      const res = await api.get(BASE_URL + '/profile/view', {
+      const res = await api.get('/profile/view', {
         withCredentials: true,
       });
       dispatch(addUser(res.data));

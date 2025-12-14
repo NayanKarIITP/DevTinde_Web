@@ -340,7 +340,7 @@ const Login = () => {
 
 
     try {
-      const res = await api.post(BASE_URL + endpoint, payload, {
+      const res = await api.post(endpoint, payload, {
         withCredentials: true,
       });
 

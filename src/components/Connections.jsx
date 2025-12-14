@@ -74,7 +74,7 @@ const Connections = () => {
     // Avoid re-fetching if connections are already loaded
     if (connection && connection.length > 0) return;
     try {
-      const res = await api.get(BASE_URL + '/user/connections', { withCredentials: true });
+      const res = await api.get('/user/connections', { withCredentials: true });
       dispatch(addConnections(res.data.data));
     } catch (error) {
       console.error("Failed to fetch connections:", error);

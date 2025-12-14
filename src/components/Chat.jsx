@@ -16,7 +16,7 @@ const Chat = () => {
 
   const fetchChatMessages = async () => {
     try {
-      const res = await api.get(BASE_URL + "/chat/" + targetUserId, {
+      const res = await api.get("/chat/" + targetUserId, {
         withCredentials: true,
       });
 
