@@ -81,11 +81,11 @@
 
 
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BASE_URL } from '../utils/constants';
 import { addRequests } from '../utils/requestSlice';
 import { motion, AnimatePresence } from 'framer-motion';
+import api from "../utils/api";
 
 // --- Icon components for the buttons ---
 const CheckIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>;
@@ -104,7 +104,7 @@ const Requests = () => {
 
     const fetchRequests = async () => {
         try {
-            const res = await axios.get(BASE_URL + '/user/requests/recieved', { withCredentials: true });
+            const res = await api.get(BASE_URL + '/user/requests/recieved', { withCredentials: true });
             dispatch(addRequests(res.data.data));
         } catch (error) {
             console.error("Failed to fetch requests:", error);
@@ -120,7 +120,7 @@ const Requests = () => {
         setRequests(currentRequests => currentRequests.filter(req => req._id !== requestId));
         
         try {
-            await axios.post(`${BASE_URL}/request/review/${status}/${requestId}`, {}, { withCredentials: true });
+            await api.post(`${BASE_URL}/request/review/${status}/${requestId}`, {}, { withCredentials: true });
             // On success, the state is already updated. You could add a success toast here.
         } catch (error) {
             console.error(`Failed to ${status} request:`, error);

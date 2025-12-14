@@ -154,6 +154,7 @@ import Usercard from './Usercard';
 import { addUser } from '../utils/userSlice';
 import { BASE_URL } from '../utils/constants';
 import { motion, AnimatePresence } from 'framer-motion';
+import api from "../utils/api";
 
 const EditProfile = ({ user }) => {
     const dispatch = useDispatch();
@@ -192,7 +193,7 @@ const EditProfile = ({ user }) => {
         setIsSaving(true);
 
         try {
-            const res = await axios.patch(`${BASE_URL}/profile/edit`, formData, { withCredentials: true });
+            const res = await api.patch(`${BASE_URL}/profile/edit`, formData, { withCredentials: true });
             dispatch(addUser(res?.data?.data));
             setShowToast(true);
             setTimeout(() => setShowToast(false), 2500);

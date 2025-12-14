@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
+import api from "../utils/api";
 import { useSelector, useDispatch } from 'react-redux'
 import { BASE_URL } from '../utils/constants'
-import axios from 'axios'
 import { addFeed } from '../utils/feedSlice';
 import Usercard from './Usercard'
+import api from "../utils/api";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
@@ -12,7 +13,7 @@ const Feed = () => {
   const getFeed = async() => {
     if (feed) return;
     try {
-      const res= await axios.get(BASE_URL+'/feed',{withCredentials:true});
+      const res= await api.get(BASE_URL+'/feed',{withCredentials:true});
       dispatch(addFeed(res.data));
     } catch (error) {
       //TODO: Handle error

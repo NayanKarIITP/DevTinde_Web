@@ -281,8 +281,7 @@
 
 
 
-
-import axios from "axios";
+import api from "../utils/api";
 import { useState } from "react";
 import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
@@ -339,8 +338,9 @@ const Login = () => {
       ? { emailId: formData.emailId, password: formData.password }
       : formData;
 
+
     try {
-      const res = await axios.post(BASE_URL + endpoint, payload, {
+      const res = await api.post(BASE_URL + endpoint, payload, {
         withCredentials: true,
       });
 

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { createSocketConnection } from "../utils/socket";
 import { BASE_URL } from "../utils/constants";
+import api from "../utils/api";
 
 const Chat = () => {
   const { targetUserId } = useParams();
@@ -15,7 +16,7 @@ const Chat = () => {
 
   const fetchChatMessages = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/chat/" + targetUserId, {
+      const res = await api.get(BASE_URL + "/chat/" + targetUserId, {
         withCredentials: true,
       });
 

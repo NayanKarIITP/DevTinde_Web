@@ -52,7 +52,7 @@ import { Outlet, useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { BASE_URL } from '../utils/constants';
 import { addUser } from '../utils/userSlice';
-import axios from 'axios';
+import api from "../utils/api";
 import { motion } from 'framer-motion'; // Import framer-motion
 import './Body.css'; // Import the new CSS file for styling
 
@@ -66,7 +66,7 @@ const Body = () => {
     if (userData) return;
 
     try {
-      const res = await axios.get(BASE_URL + '/profile/view', {
+      const res = await api.get(BASE_URL + '/profile/view', {
         withCredentials: true,
       });
       dispatch(addUser(res.data));

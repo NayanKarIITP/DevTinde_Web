@@ -47,9 +47,9 @@
 
 import React from 'react';
 import { BASE_URL } from '../utils/constants';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { removeUserFromFeed } from '../utils/feedSlice';
+import api from "../utils/api";
 
 // --- Icon components for the buttons ---
 const HeartIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.662l1.318-1.344a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z" /></svg>;
@@ -66,7 +66,7 @@ const Usercard = ({ user }) => {
         try {
             // Optimistically update the UI by dispatching the removal action first
             dispatch(removeUserFromFeed(userId));
-            await axios.post(`${BASE_URL}/request/send/${status}/${userId}`, {}, { withCredentials: true });
+            await api.post(`${BASE_URL}/request/send/${status}/${userId}`, {}, { withCredentials: true });
         } catch (error) {
             console.error("Failed to send request:", error);
             // Here you could add logic to revert the UI change if the request fails
