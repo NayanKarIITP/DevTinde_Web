@@ -129,6 +129,9 @@
 
 
 
+
+
+
 // import axios from 'axios';
 // import { useState } from 'react';
 // import { addUser } from '../utils/userSlice';
@@ -277,66 +280,78 @@
 
 
 
-import axios from 'axios';
-import { useState } from 'react';
-import { addUser } from '../utils/userSlice';
-import { useDispatch } from 'react-redux';
-import { BASE_URL } from '../utils/constants';
-import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+
+
+import axios from "axios";
+import { useState } from "react";
+import { addUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
+import { BASE_URL } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+
+/* ================= PASSWORD VALIDATION ================= */
+const validatePassword = (password) => {
+  return {
+    minLength: password.length >= 6,
+    lowercase: /[a-z]/.test(password),
+    uppercase: /[A-Z]/.test(password),
+    number: /[0-9]/.test(password),
+  };
+};
 
 const Login = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    emailId: '',
-    password: ''
+    firstName: "",
+    lastName: "",
+    emailId: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const passwordRules = validatePassword(formData.password);
+  const isPasswordStrong = Object.values(passwordRules).every(Boolean);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
-    // 🔥 Password strength check for signup
-    if (!isLoginForm && formData.password.length < 8) {
-      setError("Password is too weak. Use at least 8 characters.");
+    // 🔐 Frontend strong password check (Signup only)
+    if (!isLoginForm && !isPasswordStrong) {
+      setError("Password does not meet strength requirements.");
       setIsLoading(false);
       return;
     }
 
-
     const endpoint = isLoginForm ? "/login" : "/sign";
-
     const payload = isLoginForm
       ? { emailId: formData.emailId, password: formData.password }
       : formData;
 
     try {
       const res = await axios.post(BASE_URL + endpoint, payload, {
-        withCredentials: true
+        withCredentials: true,
       });
 
       dispatch(addUser(isLoginForm ? res.data : res.data.data));
-      navigate(isLoginForm ? '/' : '/profile');
-
+      navigate(isLoginForm ? "/" : "/profile");
     } catch (err) {
-      console.log(err.response);
-
-      // show backend messages properly
       const errorMessage =
-        err.response?.data?.error ||
         err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.response?.data?.errors?.password ||
+        err.response?.data?.errors?.emailId ||
         "Unexpected error occurred.";
 
       setError(errorMessage);
@@ -347,8 +362,13 @@ const Login = () => {
 
   const toggleForm = () => {
     setIsLoginForm(!isLoginForm);
-    setError('');
-    setFormData({ firstName: '', lastName: '', emailId: '', password: '' });
+    setError("");
+    setFormData({
+      firstName: "",
+      lastName: "",
+      emailId: "",
+      password: "",
+    });
   };
 
   return (
@@ -368,51 +388,98 @@ const Login = () => {
             <AnimatePresence mode="wait">
               {!isLoginForm && (
                 <motion.div
-                  key="signup-fields"
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
                   className="grid grid-cols-2 gap-4 overflow-hidden"
                 >
-                  <label className="form-control">
-                    <div className="label"><span className="label-text text-white/70">First Name</span></div>
-                    <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="input input-bordered w-full bg-white/10" required />
-                  </label>
-                  <label className="form-control">
-                    <div className="label"><span className="label-text text-white/70">Last Name</span></div>
-                    <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className="input input-bordered w-full bg-white/10" required />
-                  </label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="input input-bordered bg-white/10"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="input input-bordered bg-white/10"
+                    required
+                  />
                 </motion.div>
               )}
             </AnimatePresence>
 
-            <label className="form-control">
-              <div className="label"><span className="label-text text-white/70">Email</span></div>
-              <input type="email" name="emailId" value={formData.emailId} onChange={handleChange} className="input input-bordered w-full bg-white/10" required />
-            </label>
+            <input
+              type="email"
+              name="emailId"
+              placeholder="Email"
+              value={formData.emailId}
+              onChange={handleChange}
+              className="input input-bordered w-full bg-white/10"
+              required
+            />
 
-            <label className="form-control">
-              <div className="label"><span className="label-text text-white/70">Password</span></div>
-              <input type="password" name="password" value={formData.password} onChange={handleChange} className="input input-bordered w-full bg-white/10" required />
-            </label>
+            {/* ================= PASSWORD INPUT ================= */}
+            <div>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                className="input input-bordered w-full bg-white/10"
+                required
+              />
+
+              {/* Password Rules */}
+              {!isLoginForm && (
+                <div className="mt-2 text-sm space-y-1">
+                  <p className={passwordRules.minLength ? "text-green-400" : "text-red-400"}>
+                    • Minimum 6 characters
+                  </p>
+                  <p className={passwordRules.lowercase ? "text-green-400" : "text-red-400"}>
+                    • At least 1 lowercase letter
+                  </p>
+                  <p className={passwordRules.uppercase ? "text-green-400" : "text-red-400"}>
+                    • At least 1 uppercase letter
+                  </p>
+                  <p className={passwordRules.number ? "text-green-400" : "text-red-400"}>
+                    • At least 1 number
+                  </p>
+                </div>
+              )}
+            </div>
 
             {error && (
-              <div role="alert" className="alert alert-error text-sm">
+              <div className="alert alert-error text-sm">
                 <span>{error}</span>
               </div>
             )}
 
-            <div className="card-actions justify-center pt-4">
-              <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
-                {isLoading ? <span className="loading loading-spinner"></span> : (isLoginForm ? "Login" : "Sign Up")}
-              </button>
-            </div>
+            <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
+              {isLoading ? (
+                <span className="loading loading-spinner"></span>
+              ) : isLoginForm ? (
+                "Login"
+              ) : (
+                "Sign Up"
+              )}
+            </button>
           </form>
 
-          <p className='text-center text-sm text-white/60 mt-4'>
+          <p className="text-center text-sm text-white/60 mt-4">
             {isLoginForm ? "Don't have an account? " : "Already have an account? "}
-            <span onClick={toggleForm} className="font-bold text-primary hover:underline cursor-pointer">
+            <span
+              onClick={toggleForm}
+              className="font-bold text-primary hover:underline cursor-pointer"
+            >
               {isLoginForm ? "Sign Up" : "Login"}
             </span>
           </p>
