@@ -1,9 +1,12 @@
+import { io } from "socket.io-client";
 
-import axios from "axios";
+const SOCKET_URL = import.meta.env.VITE_BACKEND_URL;
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: true,
-});
+export const createSocketConnection = () => {
+  return io(SOCKET_URL, {
+    withCredentials: true,
+    transports: ["websocket"],
+  });
+};
 
-export default api;
+export default createSocketConnection;
