@@ -6,8 +6,6 @@ import Feed from './components/Feed'
 import Requests from './components/Requests'
 import Chat from './components/Chat'
 import { SpeedInsights } from "@vercel/speed-insights/react"
-
-
 import { BrowserRouter, Routes, Route } from 'react-router'
 import { Provider } from "react-redux"
 import appStore from './utils/appStore'
