@@ -1,8 +1,11 @@
-import io from 'socket.io-client';
-import { BASE_URL } from './constants';
+import { io } from "socket.io-client";
 
-export const  createSocketConnection = () => {
-    if(location.hostname === "localhost") return io(BASE_URL);
-    else return io("/",{path:"/api/socket.io"});
+const SOCKET_URL = import.meta.env.VITE_BACKEND_URL;
+
+export const createSocketConnection = () => {
+  return io(SOCKET_URL, {
+    withCredentials: true,
+  });
 };
+
 export default createSocketConnection;
