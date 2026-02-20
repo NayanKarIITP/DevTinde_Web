@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { BASE_URL } from '../utils/constants';
 import { addUser } from '../utils/userSlice';
 import api from "../utils/api";
-import { motion } from 'framer-motion'; // Import framer-motion
-import './Body.css'; // Import the new CSS file for styling
+import { motion } from 'framer-motion';
+import './Body.css';
 
 const Body = () => {
   const dispatch = useDispatch();
